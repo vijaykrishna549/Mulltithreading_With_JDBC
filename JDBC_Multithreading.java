@@ -29,7 +29,9 @@ import java.sql.*;
 
             }
             JDBC_PracticeProblem jdbc = new JDBC_PracticeProblem();
-           // mutlithreading_in_jdbc jdbc1 = new mutlithreading_in_jdbc();
+            mutlithreading_in_jdbc jdbc1 = new mutlithreading_in_jdbc();
+            jdbc.start();
+            jdbc1.start();
             System.out.println( start = System.currentTimeMillis());
 
             try {
@@ -61,5 +63,21 @@ import java.sql.*;
         }
 
     }
+class mutlithreading_in_jdbc extends  Thread{
+
+    public void run(){
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/payroll_service","root","mysql");
+            Statement stmt4 = connection.createStatement();
+
+            stmt4.executeUpdate("insert into employee(name,address) values('Naman', 'Jhansi')");
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
+}
+
 
 
